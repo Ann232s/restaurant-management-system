@@ -27,11 +27,22 @@ namespace RestaurantSystem
 
         public void CalculateCostPrice()
         {
-            CostPrice = 0;
+            CostPrice = CalculateIngredientsTotalCost();
+        }
+
+        private decimal CalculateIngredientsTotalCost()
+        {
+            decimal total = 0;
             foreach (var ingredient in Ingredients)
             {
-                CostPrice += ingredient.Product.Price * ingredient.Quantity;
+                total += CalculateIngredientCost(ingredient);
             }
+            return total;
+        }
+
+        private decimal CalculateIngredientCost(Ingredient ingredient)
+        {
+            return ingredient.Product.Price * ingredient.Quantity;
         }
 
         public void SetPriceWithMarkup(decimal markupPercent)
@@ -56,7 +67,7 @@ namespace RestaurantSystem
 
         public decimal CalculateProfitPerServing(decimal sellingPrice, decimal taxRate)
         {
-            // taxRate не используется в расчёте
+
             return sellingPrice - CostPrice;
         }
 
