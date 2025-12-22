@@ -38,6 +38,16 @@ namespace RestaurantSystem
                 total += CalculateIngredientCost(ingredient);
             }
             return total;
+
+        }
+        public decimal GetPriceWithTax()
+        {
+            return CalculatePriceWithTax(Price, 0.2m);
+        }
+
+        private decimal CalculatePriceWithTax(decimal price, decimal taxRate)
+        {
+            return price * (1 + taxRate);
         }
 
         private decimal CalculateIngredientCost(Ingredient ingredient)
