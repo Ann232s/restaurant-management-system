@@ -8,22 +8,31 @@ namespace RestaurantSystem
         // Пример 1: Сложный условный оператор для декомпозиции
         public string GetDishCategory(int cookingTime, decimal price, bool isVegetarian)
         {
-            string category = "Обычное блюдо";
-            
-            if (cookingTime > 60 && price > 500 && isVegetarian == false)
-            {
-                category = "Премиум мясное блюдо";
-            }
-            else if (cookingTime <= 30 && price < 300 && isVegetarian == true)
-            {
-                category = "Лёгкое вегетарианское";
-            }
-            else if (cookingTime > 45 && price > 400)
-            {
-                category = "Сложное в приготовлении";
-            }
-            
-            return category;
+            if (IsPremiumMeatDish(cookingTime, price, isVegetarian))
+                return "Премиум мясное блюдо";
+
+            if (IsLightVegetarianDish(cookingTime, price, isVegetarian))
+                return "Лёгкое вегетарианское";
+
+            if (IsComplexDish(cookingTime, price))
+                return "Сложное в приготовлении";
+
+            return "Обычное блюдо";
+        }
+
+        private bool IsPremiumMeatDish(int cookingTime, decimal price, bool isVegetarian)
+        {
+            return cookingTime > 60 && price > 500 && !isVegetarian;
+        }
+
+        private bool IsLightVegetarianDish(int cookingTime, decimal price, bool isVegetarian)
+        {
+            return cookingTime <= 30 && price < 300 && isVegetarian;
+        }
+
+        private bool IsComplexDish(int cookingTime, decimal price)
+        {
+            return cookingTime > 45 && price > 400;
         }
 
         // Пример 2: Несколько условий для консолидации
