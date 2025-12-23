@@ -5,19 +5,42 @@ namespace RestaurantSystem
     // Базовый класс - сотрудник ресторана
     public class Employee
     {
-        public string Name { get; set; }
-        public string Position { get; set; }
-        public decimal Salary { get; set; }
-        
-        // Метод, который будет подниматься
-        public void PrintBasicInfo()
+        // ... существующие свойства ...
+
+        // ОБЩИЙ МЕТОД (поднят наверх)
+        public virtual void PrintInfo()
         {
             Console.WriteLine($"Сотрудник: {Name}");
             Console.WriteLine($"Должность: {Position}");
         }
-        
-        // Поле, которое будет подниматься
-        protected string restaurantName = "Ресторан 'Вкус Востока'";
+    }
+
+    // 3. Переопределяем в подклассах:
+    public class Chef : Employee
+    {
+        public override void PrintInfo()
+        {
+            base.PrintInfo(); // вызов базовой реализации
+            Console.WriteLine($"Специализация: {Specialization}");
+        }
+    }
+
+    public class Waiter : Employee
+    {
+        public override void PrintInfo()
+        {
+            base.PrintInfo();
+            Console.WriteLine($"Количество столов: {TablesCount}");
+        }
+    }
+
+    public class Manager : Employee
+    {
+        public override void PrintInfo()
+        {
+            base.PrintInfo();
+            Console.WriteLine($"Отдел: {Department}");
+        }
     }
 
     // Класс Шеф-повар
