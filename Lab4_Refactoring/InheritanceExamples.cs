@@ -124,18 +124,42 @@ namespace RestaurantSystem
         protected string shiftSchedule = "Дневная смена";
     }
 
-    // Класс для примера подъёма поля
-    public class MenuItem
-    {
-        // Поля, которые дублируются в подклассах
-        public string Name { get; set; }
-        public decimal Price { get; set; }
-        
-        // Поле для подъёма
-        protected int calories = 0;
-    }
+// Класс для примера подъёма поля
+public abstract class MenuItem  // делаем абстрактным
+{
+    public string Name { get; set; }
+    public decimal Price { get; set; }
 
-    public class Drink : MenuItem
+    // Абстрактное свойство (каждый подкласс определяет свою калорийность)
+    public abstract int Calories { get; }
+}
+
+public class Drink : MenuItem
+{
+    public decimal Volume { get; set; }
+
+    // Реализуем свойство
+    public override int Calories => 150;
+
+    public void ShowDrinkInfo()
+    {
+        Console.WriteLine($"Напиток: {Name}, {Volume} мл, {Calories} ккал");
+    }
+}
+
+public class Dish : MenuItem
+{
+    public int CookingTime { get; set; }
+
+    // Реализуем свойство
+    public override int Calories => 350;
+
+    public void ShowDishInfo()
+    {
+        Console.WriteLine($"Блюдо: {Name}, {CookingTime} мин, {Calories} ккал");
+    }
+}
+public class Drink : MenuItem
     {
         public decimal Volume { get; set; }
         
