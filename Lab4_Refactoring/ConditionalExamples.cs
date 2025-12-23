@@ -77,42 +77,23 @@ namespace RestaurantSystem
         // Пример 4: Управляющий флаг
         public bool ProcessOrder(List<string> dishes)
         {
-            bool orderProcessed = false; // Управляющий флаг
-            bool paymentReceived = false;
-            bool kitchenAccepted = false;
-            
+            if (!CanKitchenAcceptOrder(dishes))
+                return false;
+
+            if (!ProcessPayment())
+                return false;
+
+            return true;
+        }
+
+        private bool CanKitchenAcceptOrder(List<string> dishes)
+        {
             foreach (var dish in dishes)
             {
-                if (!CheckIngredients(dish))
-                {
-                    orderProcessed = false;
-                    break;
-                }
-                
-                if (!CheckCookingTime(dish))
-                {
-                    orderProcessed = false;
-                    break;
-                }
-                
-                kitchenAccepted = true;
+                if (!CheckIngredients(dish) || !CheckCookingTime(dish))
+                    return false;
             }
-            
-            if (kitchenAccepted)
-            {
-                paymentReceived = ProcessPayment();
-                
-                if (paymentReceived)
-                {
-                    orderProcessed = true;
-                }
-                else
-                {
-                    orderProcessed = false;
-                }
-            }
-            
-            return orderProcessed;
+            return true;
         }
 
         // Вспомогательные методы
