@@ -3,25 +3,40 @@ using System;
 namespace RestaurantSystem
 {
     // Базовый класс - сотрудник ресторана
-    public class Employee
-    {
-        // ... существующие свойства ...
 
-        // ОБЩИЙ МЕТОД (поднят наверх)
-        public virtual void PrintInfo()
+    public abstract class Employee  // делаем класс абстрактным
+    {
+        // ... свойства ...
+
+        // Абстрактный метод (каждый сотрудник выполняет свою работу)
+        public abstract void PerformWork();
+    }
+
+    public class Chef : Employee
+    {
+        public override void PerformWork()
         {
-            Console.WriteLine($"Сотрудник: {Name}");
-            Console.WriteLine($"Должность: {Position}");
+            Console.WriteLine($"{Name} готовит блюда в {restaurantName}");
+        }
+
+        // Конкретный метод только для шефа
+        public void CookDish(string dishName)
+        {
+            Console.WriteLine($"{Name} готовит {dishName}");
         }
     }
 
-    // 3. Переопределяем в подклассах:
-    public class Chef : Employee
+    public class Waiter : Employee
     {
-        public override void PrintInfo()
+        public override void PerformWork()
         {
-            base.PrintInfo(); // вызов базовой реализации
-            Console.WriteLine($"Специализация: {Specialization}");
+            Console.WriteLine($"{Name} обслуживает клиентов");
+        }
+
+        // Конкретный метод только для официанта
+        public void ServeTable(int tableNumber)
+        {
+            Console.WriteLine($"{Name} обслуживает стол {tableNumber}");
         }
     }
 
