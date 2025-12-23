@@ -53,41 +53,24 @@ namespace RestaurantSystem
         public decimal CalculateDiscount(bool isRegularCustomer, int orderCount, decimal totalAmount)
         {
             decimal discount = 0;
-            
+            decimal discountRate = 0;
+
             if (isRegularCustomer)
             {
-                if (orderCount > 10)
+                discountRate = GetRegularCustomerDiscountRate(orderCount);
+                if (discountRate > 0)
                 {
-                    discount = totalAmount * 0.15m;
-                    // Дублирующийся код
-                    Console.WriteLine("Применена скидка");
-                    LogDiscount("regular", 0.15m);
-                }
-                else if (orderCount > 5)
-                {
-                    discount = totalAmount * 0.10m;
-                    // Дублирующийся код
-                    Console.WriteLine("Применена скидка");
-                    LogDiscount("regular", 0.10m);
-                }
-                else if (orderCount > 2)
-                {
-                    discount = totalAmount * 0.05m;
-                    // Дублирующийся код
-                    Console.WriteLine("Применена скидка");
-                    LogDiscount("regular", 0.05m);
+                    discount = totalAmount * discountRate;
+                    ApplyDiscountLogging("regular", discountRate);
                 }
             }
-            else
+            else if (totalAmount > 5000)
             {
-                if (totalAmount > 5000)
-                {
-                    discount = totalAmount * 0.05m;
-                    Console.WriteLine("Применена скидка");
-                    LogDiscount("new", 0.05m);
-                }
+                discountRate = 0.05m;
+                discount = totalAmount * discountRate;
+                ApplyDiscountLogging("new", discountRate);
             }
-            
+
             return discount;
         }
 
