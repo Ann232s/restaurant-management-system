@@ -96,9 +96,15 @@ namespace RestaurantSystem
         {
             Console.WriteLine($"{Name} обслуживает стол {tableNumber} в {restaurantName}");
         }
-        
+
         // Поле, которое дублируется (должно быть в базовом классе)
-        protected string shiftSchedule = "Дневная смена";
+      
+            // ПОДНЯТОЕ ПОЛЕ
+            protected string shiftSchedule = "Дневная смена";
+
+            public string GetShiftSchedule() => shiftSchedule;
+            public void SetShiftSchedule(string schedule) => shiftSchedule = schedule;
+        }
     }
 
     // Класс Управляющий
