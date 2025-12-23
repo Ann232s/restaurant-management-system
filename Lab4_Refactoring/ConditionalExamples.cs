@@ -38,26 +38,15 @@ namespace RestaurantSystem
         // Пример 2: Несколько условий для консолидации
         public bool CanOrderDish(int time, bool kitchenOpen, bool ingredientsAvailable, bool chefAvailable)
         {
-            bool canOrder = false;
-            
-            if (time >= 10)
-            {
-                if (time <= 22)
-                {
-                    if (kitchenOpen == true)
-                    {
-                        if (ingredientsAvailable == true)
-                        {
-                            if (chefAvailable == true)
-                            {
-                                canOrder = true;
-                            }
-                        }
-                    }
-                }
-            }
-            
-            return canOrder;
+            return IsWorkingTime(time) &&
+                   kitchenOpen &&
+                   ingredientsAvailable &&
+                   chefAvailable;
+        }
+
+        private bool IsWorkingTime(int time)
+        {
+            return time >= 10 && time <= 22;
         }
 
         // Пример 3: Дублирующиеся условные фрагменты
